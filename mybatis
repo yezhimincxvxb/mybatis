@@ -1,0 +1,68 @@
+### mybatis
+持久层框架
+
+### pom.xml
+<dependency>
+    <groupId>org.mybatis.spring.boot</groupId>
+    <artifactId>mybatis-spring-boot-starter</artifactId>
+    <version>2.1.4</version>
+</dependency>
+
+### application.yml
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  #扫描Mapper.xml文件
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  #扫描实体类包
+  type-aliases-package: com.yzm.mybatis.entity
+  #控制台打印SQL语句
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #对象工厂
+    object-factory: com.yzm.mybatis.factory.CreateDateUnixStrFactory
+    #开启表字段与实体类属性驼峰命名映射
+    map-underscore-to-camel-case: true
+
+### 扫描mapper层(dao层)
+在MybatisConfig配置类上加上
+@MapperScan("com.yzm.mybatis.mapper")
+
+### 类型处理器GenderTypeHandler
+针对字段赋值以及取值时，进行修改
+
+### 对象工厂
+查询数据库获取数据之后，赋值给POJO对象之前执行
+
+### 插件
+执行器Executor（update、query、commit、rollback等方法）；
+参数处理器ParameterHandler（getParameterObject、setParameters方法）；
+结果集处理器ResultSetHandler（handleResultSets、handleOutputParameters等方法）；
+SQL语法构建器StatementHandler（prepare、parameterize、batch、update、query等方法）；
+
+### 查询
+一对一association
+一对多collection
+多对多collection
+嵌套查询会多次执行SQL语句，影响性能
+
+### 动态 SQL
+if
+choose (when, otherwise)
+trim (where, set)
+foreach
+
+
+
+
+
+
+
+
+
+
+
